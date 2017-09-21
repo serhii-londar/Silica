@@ -39,10 +39,10 @@
       },
       {
         "package": "Cairo",
-        "repositoryURL": "https://github.com/PureSwift/Cairo.git",
+        "repositoryURL": "https://github.com/serhii-londar/Cairo.git",
         "state": {
           "branch": "master",
-          "revision": "9fa92e223d8f596e3c545f320f1235178dec79d2",
+          "revision": "f545d0d9ec38ea081b0ff95b370ef0f559e4fb56",
           "version": null
         }
       },

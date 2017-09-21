@@ -12,7 +12,7 @@ let package = Package(
             targets: ["Silica"]),
         ],
     dependencies: [
-        .package(url: "https://github.com/PureSwift/Cairo.git", .branch("master")),
+        .package(url: "https://github.com/serhii-londar/Cairo.git", .branch("master")),
         .package(url: "https://github.com/PureSwift/LittleCMS.git", .branch("master"))
     ],
     targets: [

@@ -716,6 +716,73 @@ public final class CGContext {
         }
     }
     
+    public func showCentered(text: String, position: CGPoint) {
+        let oldPoint = internalContext.currentPoint
+        
+        internalContext.move(to: (0, 0))
+        
+        // calculate text matrix
+        
+        var cairoTextMatrix = Matrix.identity
+        
+        cairoTextMatrix.scale(x: Double(fontSize), y: Double(fontSize))
+        
+        cairoTextMatrix.multiply(a: cairoTextMatrix, b: textMatrix.toCairo())
+        
+        internalContext.setFont(matrix: cairoTextMatrix)
+        
+        internalContext.source = internalState.fill?.pattern ?? DefaultPattern
+        
+        internalContext.showCentered(text: text, x: Double(position.x), y: Double(position.y))
+        
+        let distance = internalContext.currentPoint ?? (0, 0)
+        
+        textPosition = CGPoint(x: textPosition.x + CGFloat(distance.x), y: textPosition.y + CGFloat(distance.y))
+        
+        if let oldPoint = oldPoint {
+            
+            internalContext.move(to: oldPoint)
+            
+        } else {
+            
+            internalContext.newPath()
+        }
+    }
+    
+    public func showRight(text: String, position: CGPoint) {
+        let oldPoint = internalContext.currentPoint
+        
+        internalContext.move(to: (0, 0))
+        
+        // calculate text matrix
+        
+        var cairoTextMatrix = Matrix.identity
+        
+        cairoTextMatrix.scale(x: Double(fontSize), y: Double(fontSize))
+        
+        cairoTextMatrix.multiply(a: cairoTextMatrix, b: textMatrix.toCairo())
+        
+        internalContext.setFont(matrix: cairoTextMatrix)
+        
+        internalContext.source = internalState.fill?.pattern ?? DefaultPattern
+        
+        internalContext.showRight(text: text, x: Double(position.x), y: Double(position.y))
+        
+        let distance = internalContext.currentPoint ?? (0, 0)
+        
+        textPosition = CGPoint(x: textPosition.x + CGFloat(distance.x), y: textPosition.y + CGFloat(distance.y))
+        
+        if let oldPoint = oldPoint {
+            
+            internalContext.move(to: oldPoint)
+            
+        } else {
+            
+            internalContext.newPath()
+        }
+    }
+    
+    
     public func show(text: String) {
         
         guard let font = internalState.font?.scaledFont,

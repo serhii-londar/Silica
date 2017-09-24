@@ -31,7 +31,7 @@ public final class CGImage {
     
     // MARK: - Initialization
     
-    internal init(surface: Cairo.Surface.Image) {
+    public init(surface: Cairo.Surface.Image) {
         
         self.surface = surface
     }

@@ -20,16 +20,9 @@ import struct Foundation.CGRect
 public extension CGRect {
     
 #if os(Linux)
-    
-    public init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
-        
-        self.origin = CGPoint(x: x, y: y)
-        self.size = CGSize(width: width, height: height)
-    }
-    
     public static var zero: CGRect { return CGRect() }
     
-    public static var null: CGRect { return CGRect(x: .nan, y: .nan, width: .nan, height: .nan) }
+    public static var null: CGRect { return CGRect(x: CGFloat.nan, y: CGFloat.nan, width: CGFloat.nan, height: CGFloat.nan) }
     
     // MARK: - Accessors
     

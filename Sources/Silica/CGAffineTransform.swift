@@ -8,39 +8,39 @@
 
 import Cairo
 import CCairo
-import struct Foundation.CGFloat
-import struct Foundation.CGPoint
-import struct Foundation.CGSize
-import struct Foundation.CGRect
+import Foundation
+
+#if os(macOS)
+
+import struct CoreGraphics.CGAffineTransform
+public typealias CGAffineTransform = CoreGraphics.CGAffineTransform
+
+#else
 
 /// Affine Transform
 public struct CGAffineTransform {
     
     // MARK: - Properties
     
-    public var a, b, c, d: CGFloat
-    
-    public var t: (x: CGFloat, y: CGFloat)
+    public var a, b, c, d, tx, ty: CGFloat
     
     // MARK: - Initialization
     
-    public init(a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat, t: (x: CGFloat, y: CGFloat)) {
+    public init(a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat, tx: CGFloat, ty: CGFloat) {
         
         self.a = a
         self.b = b
         self.c = c
         self.d = d
-        self.t = t
+        self.tx = tx
+        self.ty = ty
     }
     
-    init(a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat, tx: CGFloat, ty: CGFloat) {
-        
-        self.init(a: a, b: b, c: c, d: d, t: (tx, ty))
-    }
-    
-    public static let identity = CGAffineTransform(a: 1, b: 0, c: 0, d: 1, t: (x: 0, y: 0))
+    public static let identity = CGAffineTransform(a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0)
 }
 
+#endif
+    
 // MARK: - Geometry Math
 
 // Immutable math
@@ -68,8 +68,8 @@ extension CGPoint: CGAffineTransformMath {
     @inline(__always)
     public func applying(_ t: CGAffineTransform) -> CGPoint {
         
-        return CGPoint(x: t.a * x + t.c * y + t.t.x,
-                       y: t.b * x + t.d * y + t.t.y)
+        return CGPoint(x: t.a * x + t.c * y + t.tx,
+                       y: t.b * x + t.d * y + t.ty)
     }
 }
 
@@ -101,7 +101,8 @@ extension CGAffineTransform: CairoConvertible {
                   b: CGFloat(matrix.xy),
                   c: CGFloat(matrix.yx),
                   d: CGFloat(matrix.yy),
-                  t: (x: CGFloat(matrix.x0), y: CGFloat(matrix.y0)))
+                  tx: CGFloat(matrix.x0),
+                  ty: CGFloat(matrix.y0))
     }
     
     @inline(__always)
@@ -113,9 +114,10 @@ extension CGAffineTransform: CairoConvertible {
         matrix.xy = Double(b)
         matrix.yx = Double(c)
         matrix.yy = Double(d)
-        matrix.x0 = Double(t.x)
-        matrix.y0 = Double(t.y)
+        matrix.x0 = Double(tx)
+        matrix.y0 = Double(ty)
         
         return matrix
     }
 }
+

@@ -12,17 +12,11 @@
     import Glibc
 #endif
 
-import struct Foundation.CGFloat
-import struct Foundation.CGPoint
-import struct Foundation.CGSize
-import struct Foundation.CGRect
+import Foundation
+
+#if os(Linux)
 
 public extension CGRect {
-    
-#if os(Linux)
-    public static var zero: CGRect { return CGRect() }
-    
-    public static var null: CGRect { return CGRect(x: CGFloat.nan, y: CGFloat.nan, width: CGFloat.nan, height: CGFloat.nan) }
     
     // MARK: - Accessors
     
@@ -175,6 +169,10 @@ public extension CGRect {
         return union
     }
     
+    public func intersects(_ r2: CGRect) -> Bool {
+        return self.intersection(r2).isNull == false
+    }
+    
     /// Returns the intersection of two rectangles.
     public func intersection(_ other: CGRect) -> CGRect {
         
@@ -214,5 +212,6 @@ public extension CGRect {
         return rect;
     }
 
-#endif
 }
+
+#endif

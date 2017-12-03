@@ -14,10 +14,7 @@
 
 import Cairo
 import CCairo
-import struct Foundation.CGFloat
-import struct Foundation.CGPoint
-import struct Foundation.CGSize
-import struct Foundation.CGRect
+import Foundation
 
 public final class CGContext {
     
@@ -269,9 +266,12 @@ public final class CGContext {
     
     public var textPosition: CGPoint {
         
-        get { return CGPoint(x: textMatrix.t.x, y: textMatrix.t.y) }
+        get { return CGPoint(x: textMatrix.tx, y: textMatrix.ty) }
         
-        set { textMatrix.t = (newValue.x, newValue.y) }
+        set {
+            textMatrix.tx = newValue.x
+            textMatrix.ty = newValue.y
+        }
     }
     
     // MARK: - Methods

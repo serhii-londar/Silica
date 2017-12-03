@@ -10,10 +10,7 @@ import Cairo
 import CCairo
 import CFontConfig
 
-import struct Foundation.CGFloat
-import struct Foundation.CGPoint
-import struct Foundation.CGSize
-import struct Foundation.CGRect
+import Foundation
 
 /// Silica's `Font` type.
 public struct CGFont: Equatable, Hashable {
@@ -235,7 +232,10 @@ internal extension String {
     
     func substring(range: Range<Int>) -> String? {
         let indexRange = utf8.index(utf8.startIndex, offsetBy: range.lowerBound) ..< utf8.index(utf8.startIndex, offsetBy: range.upperBound)
-        return String(utf8[indexRange])
+        
+        let substring = String(utf8[indexRange])
+        
+        return substring
     }
 }
 
